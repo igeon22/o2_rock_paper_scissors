@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <h1>Rock-Paper-Scissors</h1>
+    <div class="game">
+
+        <p class="round-count">Remaining Rounds : 5</p>
+        <div class="players">
+            <div class="player-block">
+                <p class="user">Player</p>
+                <p class="score" id="player-score">0</p>
+            </div>
+            <p class="versus">VS</p>
+    
+            <div class="player-block">
+                <p class="score" id="cpu-score">0</p>
+                <p class="user">CPU</p>
+            </div>
+        </div>
+    
+        <div class="message-container">The game has already started</div>
+    
+         <div class="buttons-container">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+         </div>
+    
+         <div class="res">
+    
+             <button class="restart-btn">Restart</button>
+         </div>
+    </div>
+
+    <div class="footer">Created by Igeon22</div>
 
     <script src="./script.js"></script>
     

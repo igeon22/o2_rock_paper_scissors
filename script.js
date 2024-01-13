@@ -1,3 +1,12 @@
+let buttons = document.querySelectorAll(".buttons-container button");
+let playerScoreDisplay = document.querySelector("#player-score");
+let cpuScoreDisplay = document.querySelector("#cpu-score");
+let messageDisplay = document.querySelector(".message-container");
+let roundDisplay = document.querySelector(".round-count");
+let restartBtn = document.querySelector(".restart-btn");
+
+let message = "";
+
 function getComputerChoice(){
     let randomNumber = Math.floor(Math.random()*100);
     let computerChoice;
@@ -13,13 +22,7 @@ function getComputerChoice(){
     return computerChoice;
 }
 
-function getPlayerChoice(){
-    let playerChoice = prompt("Enter your choice(paper/rock/scissors)");
-    playerChoice = playerChoice.toLowerCase();
 
-    return playerChoice;
-    
-}
 
 function round(computerChoice,playerChoice){
     console.log("player: "+playerChoice);
@@ -27,62 +30,93 @@ function round(computerChoice,playerChoice){
     let winner = "";
 
     if(computerChoice === playerChoice){
-        console.log("TIE the round will be replayed!");
+        message = ("TIE the round will be replayed!");
         winner = "none";
     }else if(playerChoice === "paper" || playerChoice === "rock" || playerChoice === "scissors"){
         
         if(computerChoice === "rock" && playerChoice === "paper"){
-            console.log("You won the game!");
+            message = "You won the game!";
             winner = "player";
         }else if(computerChoice === "paper" && playerChoice === "rock"){
-            console.log("You loose Paper beats Rock!");
+            message = ("You loose Paper beats Rock!");
             winner = "cpu";
         }else if(computerChoice === "paper" && playerChoice === "scissors"){
-            console.log("You won the game!");
+            message = ("You won the game!");
             winner = "player";
         }else if(computerChoice === "scissors" && playerChoice === "paper"){
-            console.log("You loose Scissors beats Paper!");
+            message = ("You loose Scissors beats Paper!");
             winner = "cpu";
         }else if(computerChoice === "rock" && playerChoice === "scissors"){
-            console.log("You loose Rock beats Scissors!");
+            message = ("You loose Rock beats Scissors!");
             winner = "cpu";
         }else if(computerChoice === "scissors" && playerChoice === "rock"){
-            console.log("You won the game!");
+            message = ("You won the game!");
             winner = "player";
         }
         
     }else{
-        console.log(`${playerChoice} is not a valid option`);
         winner = "none";
     }
+
+    messageDisplay.textContent = message
+
+    
 
     return winner;
 }
 
 
+let playerScore=0,cpuScore=0,gameCount=1;
 
-function game(){
-    let playerScore=0,cpuScore=0,gameCount=1;
+function game(choice){
     
     
-    while(gameCount<=5){
-        let roundWinner = round(getComputerChoice(),getPlayerChoice());
+    let roundWinner = round(getComputerChoice(),choice);
 
-        if(roundWinner === "player"){
-            playerScore += 1;
-            gameCount+=1;
-            console.log(`Remaining rounds ${5-(gameCount-1)}`);
-        }else if(roundWinner === "cpu"){
-            cpuScore += 1;
-            gameCount+=1;
-            console.log(`Remaining rounds ${5-(gameCount-1)}`);
-        }
-        
+    if(roundWinner === "player"){
+        playerScore += 1;
+        gameCount+=1;
+        playerScoreDisplay.textContent = playerScore;
+        console.log(`Remaining rounds ${5-(gameCount-1)}`);
+    }else if(roundWinner === "cpu"){
+        cpuScore += 1;
+        cpuScoreDisplay.textContent = cpuScore;
+        gameCount+=1;
+        console.log(`Remaining rounds ${5-(gameCount-1)}`);
     }
 
-    alert(`PLAYER: ${playerScore} || CPU ${cpuScore}`);
+
+    roundDisplay.textContent = `Remaining rounds ${5-(gameCount-1)}`;
+    if(gameCount>= 6){
+        buttons.forEach((button)=>{
+            button.disabled = true;
+        })
+
+        if(playerScore>cpuScore){
+            messageDisplay.textContent = "The final winner is Player" ;
+
+        }else{
+            messageDisplay.textContent = "The final winner is CPU";
+        }
+    }
+   
 
 }
 
 
-game();
+buttons.forEach((button)=>{
+    
+
+    button.addEventListener("click",()=>{
+        game(button.id);
+    })
+    
+})
+
+
+restartBtn.addEventListener("click",()=>{
+    location.reload();
+})
+
+
+
